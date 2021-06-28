@@ -1,28 +1,31 @@
+import requests
 from flask import Blueprint, request, Response, render_template
 from database import get_db
 from .models import Product
 from flask import json
 from flask import request
-from project.products.crud import create_product, get_product
+from project.recipes.crud import create_product, get_product
+from project.recipes.recipes_gastronom import get_html, get_recipe_gastr
+from project.recipes.recipes_menunedeli import get_recipe_menu
 
-products_api_bp = Blueprint('products_api', __name__, url_prefix='/products') #
+recipes_api_bp = Blueprint('products_api', __name__, url_prefix='/recipes') #
 # products_bp = Blueprint('products', __name__, url_prefix='/products', template_folder='./templates')
 
-@products_api_bp.route('/', methods=['POST', 'GET'])
+@recipes_api_bp.route('/', methods=['POST', 'GET'])
 def products_api():
     db = get_db()
     if request.method == 'GET':
-        category = request.args.get('category')
-        print(request.args)
-        products = [{
-            'id': p.id,
-            'name': p.name,
-            'link_photo': p.link_photo,
-            'description': p.description,
-            'category': p.category
-        } for p in get_product(db, category)]
+        url = request.args.get('url')
+        print(url)
+        html = get_html(url)
+        if 'gastronom' in url:
+            ingredients = get_recipe_gastr(html) #https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
+            print(ingredients)
+        if 'menunedeli' in url:
+            ingredients = get_recipe_menu(html) #https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
+            print(ingredients)
         response = Response(
-            response=json.dumps(products),
+            response=json.dumps(ingredients),
             status=200,
             mimetype='application/json'
         )
