@@ -8,49 +8,29 @@ from project.recipes.crud import create_product, get_product
 from project.recipes.recipes_gastronom import get_html, get_recipe_gastr
 from project.recipes.recipes_menunedeli import get_recipe_menu
 
-recipes_api_bp = Blueprint('products_api', __name__, url_prefix='/recipes') #
-# products_bp = Blueprint('products', __name__, url_prefix='/products', template_folder='./templates')
+recipes_bp = Blueprint('products', __name__, template_folder='./templates')
 
-@recipes_api_bp.route('/', methods=['POST', 'GET'])
-def products_api():
-    db = get_db()
+
+@recipes_bp.route('/', methods=['GET','POST'])
+def products():
     if request.method == 'GET':
-        url = request.args.get('url')
-        print(url)
-        html = get_html(url)
-        if 'gastronom' in url:
+        return render_template(
+            'Recipe_Form.html',
+            title='My products'
+        )
+    if request.method == 'POST':
+        recipe_url = request.form.get('url')
+        html = get_html(recipe_url)
+        if 'gastronom' in recipe_url:
             ingredients = get_recipe_gastr(html) #https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
             print(ingredients)
-        if 'menunedeli' in url:
+        if 'menunedeli' in recipe_url:
             ingredients = get_recipe_menu(html) #https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
             print(ingredients)
-        response = Response(
-            response=json.dumps(ingredients),
-            status=200,
-            mimetype='application/json'
+
+
+        return render_template(
+            'Recipe_Form.html',
+            title='Response',
+            ingredients=ingredients,
         )
-        return response
-
-    if request.method == 'POST':
-        data_json = json.loads(request.data)
-        print(data_json)
-        new_product = create_product(db, **data_json)
-        
-        response = Response(
-            response=json.dumps({'status': 'OK'}),
-            status=201,
-            mimetype='application/json'
-        )
-        return response
-
-
-# @products_bp.route('/', methods=['GET'])
-# def products():
-#     db = get_db()
-#     if request.method == 'GET':
-#         products = db.query(Product).all()
-#         return render_template(
-#             'products_page.html',
-#             title='My products',
-#             products=products,
-#         )

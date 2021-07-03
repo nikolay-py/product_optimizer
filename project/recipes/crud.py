@@ -1,23 +1,21 @@
 from sqlalchemy.orm.session import Session
-from .models import Product
+from .models import Recipe
 from sqlalchemy.orm import Session
 
 
-def create_product(db: Session, name, link_photo, price, description, category):
-    new_product = Product(
+def create_product(db: Session, name, url, product_list):
+    new_recipe = Recipe(
         name=name,
-        link_photo=link_photo,
-        price=price,
-        description=description,
-        category=category,
+        url=url,
+        product_list=product_list
     )
-    db.add(new_product)
+    db.add(new_recipe)
     db.commit()
-    db.refresh(new_product)
-    return new_product
+    db.refresh(new_recipe)
+    return new_recipe
 
-def get_product(db: Session, category=None):
-    if category:
-        return db.query(Product).filter_by(category=category)
-    return db.query(Product).all()
+def get_product(db: Session, url=None): #URL вместо категории вернуть по URL
+    if url:
+        return db.query(Recipe).filter_by(url=url)
+    return db.query(Recipe).all()
 
