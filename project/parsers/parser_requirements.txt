@@ -1,0 +1,15 @@
+anyio==3.2.1
+beautifulsoup4==4.9.3
+bs4==0.0.1
+certifi==2021.5.30
+flake8==3.9.2
+h11==0.12.0
+httpcore==0.13.6
+httpx==0.18.2
+idna==3.2
+mccabe==0.6.1
+pycodestyle==2.7.0
+pyflakes==2.3.1
+rfc3986==1.5.0
+sniffio==1.2.0
+soupsieve==2.2.1
