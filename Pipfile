@@ -1,0 +1,25 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+mypy = "*"
+pytest = "*"
+isort = "<5"
+wemake-python-styleguide = "*"
+flake8 = "*"
+requests = "*"
+pytest-env = "*"
+ipython = "*"
+pytest-mock = "*"
+
+[packages]
+Flask = "==2.0.1"
+psycopg2-binary = "==2.8.6"
+sqlalchemy = "*"
+sqlalchemy-utils = "*"
+python-dotenv = "*"
+
+[requires]
+python_version = "3.9"
