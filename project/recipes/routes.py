@@ -11,7 +11,7 @@ from project.recipes.recipes_menunedeli import get_recipe_menu
 recipes_bp = Blueprint('products', __name__, template_folder='./templates')
 
 
-@recipes_bp.route('/', methods=['GET','POST'])
+@recipes_bp.route('/', methods=['GET','POST']) #TODO Проверить recipes_bp или API
 def products():
     if request.method == 'GET':
         return render_template(
