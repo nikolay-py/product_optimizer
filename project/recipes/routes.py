@@ -1,7 +1,7 @@
 import requests
 from flask import Blueprint, request, Response, render_template
 from database import get_db
-from .models import Product
+from .models import Recipe
 from flask import json
 from flask import request
 from project.recipes.crud import create_product, get_product

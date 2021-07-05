@@ -30,7 +30,6 @@ def get_recipe_gastr(html):
         })
     return all_ingredients
     
-
 if __name__ == "__main__":
     html = get_html('https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty')
     if html:
