@@ -14,4 +14,4 @@ class Good(Base):
     price_per_kg = Column(Integer(), nullable=False)
 
     def __repr__(self):
-        return f'<User {self.name} {self.category}>'
+        return f'<Good {self.name} {self.category}>'

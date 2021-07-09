@@ -11,7 +11,7 @@ def create_goods(items):
         weight=items['weight'],
         units=items['units'],
         price_per_kg=items['price_per_kg']
-        )
+    )
     with SessionLocal() as session:
         session.add(goods)
         try:
@@ -27,4 +27,3 @@ def create_goods(items):
 #     if category:
 #         return db.query(Product).filter_by(category=category)
 #     return db.query(Product).all()
-

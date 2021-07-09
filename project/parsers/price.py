@@ -6,7 +6,7 @@ def get_catalog_name(soup):
     link_page = soup.find(
         'li', class_='breadcrumb-page__item breadcrumb-page__current')
     catalog_name = link_page.text.strip()
-    return catalog_name
+    return catalog_name.lower()
 
 
 # Расчет цены за кг и проверка на пустые значения веса
@@ -34,7 +34,7 @@ def get_price(soup):
     # Находим все классы catalog-item, даже лишние, и перебираем их
     for item in soup.find_all('div', class_='product ok-theme'):
         # Название
-        item_title = item.find('div', class_='product-name').find('a')['title']
+        item_title = item.find('div', class_='product-name').find('a')['title'].lower()
 
         # Цена
         if item.find('span', class_='price label'):
