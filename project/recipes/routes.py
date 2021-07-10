@@ -43,6 +43,8 @@ def products():
             # print(type(items))
             # for item in items:
             print(items.get('item'))
+            print(items.get('qty'))
+            print(items.get('units'))
 
         return render_template(
             'Recipe_Form.html',
