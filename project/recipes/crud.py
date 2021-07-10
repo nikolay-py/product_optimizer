@@ -3,7 +3,7 @@ from .models import Recipe
 from sqlalchemy.orm import Session
 
 
-def create_product(db: Session, name, url, product_list):
+def create_recipe(db: Session, name, url, product_list):
     new_recipe = Recipe(
         name=name,
         url=url,
@@ -14,8 +14,8 @@ def create_product(db: Session, name, url, product_list):
     db.refresh(new_recipe)
     return new_recipe
 
-def get_product(db: Session, url=None): #URL вместо категории вернуть по URL
+def get_recipe(db: Session, url=None):
     if url:
-        return db.query(Recipe).filter_by(url=url)
+        return db.query(Recipe).filter_by(url=url).all()
     return db.query(Recipe).all()
 

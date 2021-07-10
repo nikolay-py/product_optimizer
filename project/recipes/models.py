@@ -6,7 +6,10 @@ class Recipe(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String, nullable=False)
     url = sa.Column(sa.String, nullable=False)
-    product_list = sa.Column(sa.Text, nullable=False)
+    product_list = sa.Column(sa.JSON, nullable=False)
+
+    def __repr__(self):
+        return '<Recipe {}>'.format(self.name)
 
 class Product(Base):
     __tablename__ = 'products'
