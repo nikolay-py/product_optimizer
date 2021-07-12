@@ -57,7 +57,7 @@ def save_as_dict(base_object):
     return base_object
 
 
-# Сокращаем результат выдачи
+# Сокращаем список результатов поиска
 def limit_result(result_list, length_list):
     new_result = []
 
@@ -72,7 +72,7 @@ def limit_result(result_list, length_list):
 
 
 # Несколько варинатнтов поиска в одной функции
-def get_product(phrase, length_list=10):
+def get_several_variants(phrase):
     goods_list = []
     unique_list = []
     words = phrase_limit(phrase)
@@ -93,10 +93,19 @@ def get_product(phrase, length_list=10):
         if good not in unique_list:
             unique_list.append(good)
 
-    # Ставим ограничение на выдачу результатов
-    limited_unique_list = limit_result(unique_list,length_list)
+    return unique_list
 
-    return limited_unique_list
+
+def get_product(phrase, length_list=10):
+    # Получаем общий результат поиска
+    general_list = get_several_variants(phrase)
+    # Сокращаем список результатов поиска
+    limited_list = limit_result(general_list,length_list)
+    # Связываем запрос с результатами выдачи для последующего
+    # точной выдачи результатов на сайте для каждого ингридиента отдельно
+    query_report = {phrase:limited_list}
+
+    return query_report
 
 
 # if __name__ == '__main__':
