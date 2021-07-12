@@ -1,7 +1,9 @@
-import requests
 import pprint
+import requests
+import sqlalchemy as sa
 from bs4 import BeautifulSoup
-# from regex import check_int, split_units TODO REGEX.PY
+from database import Base
+from .models import Recipe
 
 def get_html(url):
     try:
@@ -12,9 +14,16 @@ def get_html(url):
         print("Сетевая ошибка")
         return False
 
-def get_recipe_menu(html):
+def get_soup(html):
     soup = BeautifulSoup(html, 'html.parser')
-    ingredients_li = soup.find('ul', class_="ingredients-lst").findAll('li')
+    return soup
+
+def get_menu_name(html):
+    name = get_soup(html).find('h1').text
+    return name
+
+def get_menu(html):
+    ingredients_li = get_soup(html).find('ul', class_="ingredients-lst").findAll('li')
     all_ingredients = []
     for li in ingredients_li:
         name = li.find(class_='name').text
@@ -26,12 +35,20 @@ def get_recipe_menu(html):
             'qty': value,
             'units': type
         })
-    # pprint.pprint(all_ingredients)
     return all_ingredients
-    
+
+def save_recipe(name, url, ingredients):
+    recipe_exists = Recipe.query.filter(Recipe.url == url).count()
+    print(recipe_exists)
+    if not recipe_exists:
+        new_recipe = Recipe(name=name, url=url, product_list=ingredients)
+        sa.session.add(new_recipe)
+        sa.session.commit()
 
 if __name__ == "__main__":
     html = get_html('https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/')
     if html:
-        ingredients = get_recipe(html)
+        name = get_menu_name(html)
+        ingredients = get_menu(html)
+        print(name)
         pprint.pprint(ingredients)
