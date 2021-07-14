@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_NAME = os.environ.get('DB_URL')
-engine = create_engine(DB_NAME, echo = True)
+engine = create_engine(DB_NAME, echo=True, connect_args={'check_same_thread': False})
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
