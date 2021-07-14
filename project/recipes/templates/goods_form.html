@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4>{{ name }}</h4>
+            {% if products %}
+                {% for ingredient in products %}
+                    <li>{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</li>
+                    <select class="form-control" aria-label="Default select example">
+                        {% for good in ingredient.goods %}
+                            <option value="{{good.name}}">
+                                {{good.name}} цена {{good.price}} 
+                                (цена за {{good.units}} - {{good.price_per_kg}})
+                            </option>
+                        {% endfor %}
+                        <option value="not_available">нет походящего товара</option>
+                    </select>
+                {% endfor %}
+                
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
