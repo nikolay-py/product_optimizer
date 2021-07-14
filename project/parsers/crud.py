@@ -1,6 +1,7 @@
 from .models import Good
 from sqlalchemy.exc import SQLAlchemyError
 from database import SessionLocal
+from .search_goods import get_several_variants, limit_result
 
 
 def create_goods(items):
@@ -23,7 +24,15 @@ def create_goods(items):
             raise
 
 
-# def get_product(db: Session, category=None):
-#     if category:
-#         return db.query(Product).filter_by(category=category)
-#     return db.query(Product).all()
+def get_goods(recipe, length_list=10):
+    # На вход получаем запрос в види списка словарей,
+    # пройдемся по каждому из них
+    for ingredient in recipe:
+        # Получаем общий результат поиска по названию ингридиента
+        general_list = get_several_variants(ingredient['item'])
+        # Сокращаем список результатов поиска
+        limited_list = limit_result(general_list,length_list)
+        # Наполняем словарь ингридента подходящими товарами
+        ingredient['goods'] = limited_list
+
+    return recipe

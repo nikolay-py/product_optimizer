@@ -8,6 +8,8 @@ from flask import request
 from project.recipes.crud import create_recipe, get_recipe
 from project.recipes.recipes_gastronom import get_html, get_recipe_gastr
 from project.recipes.recipes_menunedeli import get_menu, get_menu_name, save_recipe
+# ----------------------------
+from project.parsers.crud import get_goods
 
 recipes_bp = Blueprint('products', __name__, template_folder='./templates')
 
@@ -52,3 +54,19 @@ def products():
             name=name,
             ingredients=ingredients
         )
+
+
+@recipes_bp.route('/<int:recipe_id>', methods=['GET'])
+def get_products_step(recipe_id):
+    db = get_db()
+    recipe = db.query(Recipe).filter(Recipe.id == recipe_id).first()
+    ingredients = recipe.product_list
+    name = recipe.name
+    products = get_goods(ingredients,10)
+
+    return render_template(
+        'goods_form.html',
+        title='Goods',
+        name=name,
+        products=products
+    )

@@ -1,8 +1,11 @@
-from project.parsers.querie_goods import get_product
+from project.parsers.crud import get_goods
+from project.parsers.search_goods import db
+from project.recipes.models import Recipe
 
 
 if __name__ == "__main__":
-    goods_list = get_product('Молодой вкусный картофель',10)
-    for good in goods_list[0]:
-        print(good)
-    # print(goods_list)
+    recipe = db.query(Recipe).filter(Recipe.id == 2).first().product_list
+    goods_list = get_goods(recipe,10)
+    for inhidient in goods_list:
+        print('----------------------------------------------')
+        print(inhidient)
