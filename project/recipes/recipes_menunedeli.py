@@ -1,18 +1,16 @@
-import pprint
-import requests
-import sqlalchemy as sa
+import pprint, httpx
+
 from bs4 import BeautifulSoup
-from database import Base
-from .models import Recipe
 
 def get_html(url):
-    try:
-        result = requests.get(url)
-        result.raise_for_status()
-        return result.text
-    except(requests.RequestException, ValueError):
-        print("Сетевая ошибка")
-        return False
+    with httpx.Client(timeout=10.0) as client:
+        try:
+            result = client.get(url)
+            result.raise_for_status()
+            return result.text
+        except(requests.RequestException, ValueError):
+            print("Сетевая ошибка")
+            return False
 
 def get_soup(html):
     soup = BeautifulSoup(html, 'html.parser')
@@ -36,14 +34,6 @@ def get_menu(html):
             'units': type
         })
     return all_ingredients
-
-def save_recipe(name, url, ingredients):
-    recipe_exists = Recipe.query.filter(Recipe.url == url).count()
-    print(recipe_exists)
-    if not recipe_exists:
-        new_recipe = Recipe(name=name, url=url, product_list=ingredients)
-        sa.session.add(new_recipe)
-        sa.session.commit()
 
 if __name__ == "__main__":
     html = get_html('https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/')

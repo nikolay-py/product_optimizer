@@ -385,4 +385,5 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/helm,django,python,sonarqube,virtualenv,pycharm+all,jupyternotebooks,visualstudiocode,macos
 
+*.db
 goods.db
