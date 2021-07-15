@@ -15,7 +15,7 @@ def run_parser():
         for url in link_list:
             try:
                 res = client.get(url)
-                res.raise_for_status
+                res.raise_for_status()
                 result = res.text
             except(httpx.RequestError, ValueError) as e:
                 print(f"Сетевая ошибка: {e} url: {url}")
