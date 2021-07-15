@@ -1,9 +1,8 @@
-# from parser_okey.get_soup import get_soup_file
+from .omit_list import omit_list
+from bs4 import BeautifulSoup
 import httpx
 
-from bs4 import BeautifulSoup
-from .config import city, start_url
-from .omit_list import omit_list
+start_url = "https://www.okeydostavka.ru/spb/catalog"
 
 
 # Запросить страницу в текстовом формате
@@ -41,7 +40,8 @@ def get_links():
 # Склейка url адреса.
 # Стартовая ссылка создает данные по одному городу.
 # Разбиение адреса при обработке данных и склейка здесь
-#  - дают возможность замены города через config
-def get_full_url(link_category):
+#  - дают возможность замены города
+# Питер ='spb', Москва ='msk'
+def get_full_url(link_category, city='spb'):
     full_url = f"https://www.okeydostavka.ru/{city}{link_category}"
     return full_url
