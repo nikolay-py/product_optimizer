@@ -1,13 +1,11 @@
-import requests
-from flask import Blueprint, request, Response, render_template
-from database import get_db
+from flask import Blueprint, request, render_template
+
 from .crud import get_recipe, create_recipe
+from database import get_db
 from .models import Recipe
-from flask import json
-from flask import request
 from project.recipes.crud import create_recipe, get_recipe
 from project.recipes.recipes_gastronom import get_html, get_recipe_gastr
-from project.recipes.recipes_menunedeli import get_menu, get_menu_name, save_recipe
+from project.recipes.recipes_menunedeli import get_menu, get_menu_name
 # ----------------------------
 from project.parsers.crud import get_goods
 
@@ -39,11 +37,10 @@ def products():
             create_recipe(db, name, recipe_url, ingredients)
             recipes = get_recipe(db, recipe_url) 
 
+        recipe_id = recipes[0].id
         name = recipes[0].name
         ingredients = recipes[0].product_list
         for items in ingredients:
-            # print(type(items))
-            # for item in items:
             print(items.get('item'))
             print(items.get('qty'))
             print(items.get('units'))
@@ -52,11 +49,12 @@ def products():
             'Recipe_Form.html',
             title='Response',
             name=name,
+            recipe_id = recipe_id,
             ingredients=ingredients
         )
 
 
-@recipes_bp.route('/<int:recipe_id>', methods=['GET'])
+@recipes_bp.route('/<recipe_id>', methods=['GET'])
 def get_products_step(recipe_id):
     db = get_db()
     recipe = db.query(Recipe).filter(Recipe.id == recipe_id).first()
