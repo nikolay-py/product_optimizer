@@ -15,5 +15,7 @@
 <li>{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</li>
 {% endfor %}
 </ul>
+<a href="{{ url_for('root.products.get_products_step', recipe_id=recipe_id) }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Получить цены</a>
+</form>
 {% endif %}
 {% endblock %}
