@@ -41,7 +41,7 @@ def get_links():
 # Стартовая ссылка создает данные по одному городу.
 # Разбиение адреса при обработке данных и склейка здесь
 #  - дают возможность замены города
-# Питер ='spb', Москва ='msk'
-def get_full_url(link_category, city='spb'):
+# Москва ='msk', Питер ='spb'
+def get_full_url(link_category, city='msk'):
     full_url = f"https://www.okeydostavka.ru/{city}{link_category}"
     return full_url
