@@ -1,15 +1,14 @@
-from flask import Blueprint, request, render_template, url_for
-
-from .crud import get_recipe, create_recipe
 from database import get_db
-from .models import Recipe
+from flask import Blueprint, render_template, request
+from project.parsers.crud import get_goods
 from project.recipes.crud import create_recipe, get_recipe
 from project.recipes.recipes_gastronom import get_gast_name, get_recipe_gastr
 from project.recipes.recipes_menunedeli import get_html, get_menu, get_menu_name
-# ----------------------------
-from project.parsers.crud import get_goods
+
+from .models import Recipe
 
 recipes_bp = Blueprint('products', __name__, template_folder='./templates')
+
 
 @recipes_bp.route('/', methods=['GET','POST'])
 def products():
@@ -30,12 +29,12 @@ def products():
             html = get_html(recipe_url)
             if 'gastronom' in recipe_url:
                 name = get_gast_name(html)
-                ingredients = get_recipe_gastr(html) #https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
+                ingredients = get_recipe_gastr(html) # https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
             if 'menunedeli' in recipe_url:
                 name = get_menu_name(html)
-                ingredients = get_menu(html) #https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
+                ingredients = get_menu(html) # https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
             create_recipe(db, name, recipe_url, ingredients)
-            recipes = get_recipe(db, recipe_url) 
+            recipes = get_recipe(db, recipe_url)
 
         recipe_id = recipes[0].id
         name = recipes[0].name
@@ -49,7 +48,7 @@ def products():
             'Recipe_Form.html',
             title='Response',
             name=name,
-            recipe_id = recipe_id,
+            recipe_id=recipe_id,
             ingredients=ingredients
         )
 

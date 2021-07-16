@@ -1,4 +1,5 @@
 from sqlalchemy.sql.expression import and_
+
 from database import get_db
 from project.parsers.models import Good
 

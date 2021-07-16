@@ -13,6 +13,8 @@ python-dotenv = "*"
 
 [dev-packages]
 flake8 = "*"
+pip = "*"
+isort = "*"
 
 [requires]
 python_version = "3.8"
