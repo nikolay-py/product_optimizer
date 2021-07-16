@@ -3,8 +3,8 @@
 
 <div class="container">
     <h4>{{ name }}</h4>
-    <div class="row">
-        
+    <div>Общая стоимость товаров: <span id="summaryСontainer"></span></div><br> 
+    <div class="row">         
         <div class="col-6">
             <form id="goodsForm">
             {% if products %}
@@ -23,9 +23,6 @@
                 {% endfor %}
             {% endif %}
             </form>
-        </div>
-        <div class="col-6" >
-            <div>Общая стоимость товаров: <span id="summaryСontainer"></span></div>
         </div>
     </div>
 </div>
