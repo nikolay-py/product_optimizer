@@ -17,8 +17,8 @@
                                 (цена за {{good.units}} - {{good.price_per_kg}})
                             </option>
                         {% endfor %}
-                        <option value="not_available">Нет походящего товара</option>
-                        <option value="no_need">Уже есть</option>
+                        <option value="not_available" price="0.0">Нет походящего товара</option>
+                        <option value="no_need" price="0.0">Уже есть</option>
                     </select>
                 {% endfor %}
             {% endif %}
