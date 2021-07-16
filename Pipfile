@@ -9,12 +9,10 @@ bs4 = "0.0.1"
 httpx = "0.18.2"
 beautifulsoup4 = "4.9.3"
 sqlalchemy = "==1.4.20"
+python-dotenv = "*"
 
 [dev-packages]
 flake8 = "*"
-python-dotenv = "*"
 
 [requires]
 python_version = "3.8"
-
-
