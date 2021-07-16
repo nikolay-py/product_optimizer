@@ -2,25 +2,58 @@
 {% block content %}
 
 <div class="container">
+    <h4>{{ name }}</h4>
     <div class="row">
+        
         <div class="col-6">
-            <h4>{{ name }}</h4>
+            <form id="goodsForm">
             {% if products %}
                 {% for ingredient in products %}
-                    <li>{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</li>
-                    <select class="form-control" aria-label="Default select example">
+                    <label for="exampleFormControlTextarea1" class="form-label">{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</label>
+                    <select class="form-control" aria-label="Default select example" name="{{ingredient.item}}">
                         {% for good in ingredient.goods %}
-                            <option value="{{good.name}}">
+                            <option value="{{good.name}}" price="{{good.price}}">
                                 {{good.name}} цена {{good.price}} 
                                 (цена за {{good.units}} - {{good.price_per_kg}})
                             </option>
                         {% endfor %}
-                        <option value="not_available">нет походящего товара</option>
+                        <option value="not_available">Нет походящего товара</option>
+                        <option value="no_need">Уже есть</option>
                     </select>
                 {% endfor %}
-                
             {% endif %}
+            </form>
+        </div>
+        <div class="col-6" >
+            <div>Общая стоимость товаров: <span id="summaryСontainer"></span></div>
         </div>
     </div>
 </div>
+<script>
+    var summ = 0;
+    function calculateSummary() {
+        var form = document.getElementById('goodsForm');
+        var selects = form.getElementsByTagName('select');
+        var optsPrices = []
+        for (let i = 0; i < selects.length; i++) {
+            let so = selects[i].selectedOptions;  
+            // Проходимся по всем выбранным опциям каждого select т.к. select.selectedOptions всегда Array, 
+            // даже если select подразумевает выбор только одного значения
+            for (let i = 0; i < so.length; i++) {
+                let price = so[i].getAttribute("price");
+                if (price) {  // Проверяем что price не null и не undefined
+                    optsPrices.push(parseFloat(price));
+                }
+            }            
+        }
+        summ = optsPrices.reduce((acc, price) => acc + price);  // Аккамулирую все значения которые попали в optsPrices
+        var summaryContainer = document.getElementById("summaryСontainer");
+        var sumStr = summ.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' });
+        summaryContainer.innerHTML = sumStr;
+    }
+    document.getElementById("goodsForm").addEventListener("change", event => {
+        calculateSummary()
+    })
+    calculateSummary()
+</script>
 {% endblock %}
