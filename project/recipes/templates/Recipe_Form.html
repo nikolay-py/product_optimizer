@@ -1,21 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="" method="post">
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Recipe URL</label>
-    <input type="text" name="url" class="form-control" value="https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/">
-  </div>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <form action="" method="post">
+                
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Recipe URL</label>
+                    <input type="text" name="url" class="form-control" value="https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/">
+                </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{{ name }}
-{% if ingredients %}
-<ul>
-{% for ingredient in ingredients %}
-<li>{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</li>
-{% endfor %}
-</ul>
-<a href="{{ url_for('root.products.get_products_step', recipe_id=recipe_id) }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Получить цены</a>
-</form>
-{% endif %}
+                <button type="submit" class="btn btn-primary">Получить список</button>
+
+            </form>
+            <h4>{{ name }}</h4><br>
+            
+            {% if ingredients %}
+                <ul>
+                    {% for ingredient in ingredients %}
+                        <li>{{ingredient.item}} - {{ingredient.qty}}  {{ingredient.units}}</li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('root.products.get_products_step', recipe_id=recipe_id) }}" class="btn btn-primary" role="button" aria-pressed="true">Получить цены</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
 {% endblock %}
