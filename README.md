@@ -2,6 +2,7 @@
 Продуктовый оптимизатор - это сервис оптимизации списка продуктов под список рецептов.
 #
 
+## Как это работает:
 1. **Пользователь копирует url понравившегося рецепта блюда с сайта ["Меню недели"](https://menunedeli.ru/)**
 <img src="https://raw.githubusercontent.com/nikolay-py/product_optimizer/main/pictures/1_%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_url.PNG" alt="Получение url" width="700"/>
 
