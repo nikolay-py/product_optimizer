@@ -24,23 +24,36 @@
 #
 
 
-# Установка
+## Установка
 1. Клонируйте репозиторий, создайте виртуальное окружение
 ```
 git clone https://github.com/nikolay-py/product_optimizer.git
 pip install pipenv
 pipenv shell
+```
+2. Установите зависимости
+```
 pipenv install
 ```
-2. Установите зависимости `pip install -r requirements.txt`
-3. Создайте файл settings.py и создайте в нем переменные:
 
-    
+3. Создайте файл **.env** и создайте в нем переменные:
+```
+FLASK_APP=app
+FLASK_ENV=development
+DB_URL = 'sqlite:///goods.db' # общая база данных будет создана в корне проекта
+```
 
-### Install dependencies
-`pip install pipenv`
-`pipenv install --dev`
-''
+## Наполнение базы данных
+Из корня проекта запустите парсер:
+```
+run_parsers.py
+```
+Дождитесь, пока спарсятся данные по товарам.
 
-### Run app
-`export FLASK_APP=app FLASK_ENV=development & flask run`
+## Запуск программы
+```
+flask run
+```
+
+Приложение будет доступно через браузер по адресу 
+http://127.0.0.1:5000/
