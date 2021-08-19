@@ -11,11 +11,14 @@ engine = create_engine(DB_NAME, echo=True, connect_args={'check_same_thread': Fa
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
+
 def migrate():
     Base.metadata.create_all(engine)
 
+
 def drop():
     Base.metadata.drop_all(engine)
+
 
 def get_db():
     return SessionLocal()
