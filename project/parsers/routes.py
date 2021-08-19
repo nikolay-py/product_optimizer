@@ -5,9 +5,9 @@ from flask import Blueprint
 # в app при регистрации Blueprint goods_api_bp
 from .models import Good
 
-goods_api_bp = Blueprint('goods_api', __name__, url_prefix='/goods')
+goods_bp = Blueprint('goods_bp', __name__, url_prefix='/goods')
 
 
-@goods_api_bp.route('/', methods=['GET'])
-def goods_api():
+@goods_bp.route('/', methods=['GET'])
+def goods():
     pass
