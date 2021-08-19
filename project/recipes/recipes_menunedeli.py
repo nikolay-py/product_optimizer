@@ -1,6 +1,8 @@
-import pprint, httpx
+import pprint
 
+import httpx
 from bs4 import BeautifulSoup
+
 
 def get_html(url):
     with httpx.Client(timeout=10.0) as client:
@@ -8,17 +10,20 @@ def get_html(url):
             result = client.get(url)
             result.raise_for_status()
             return result.text
-        except(requests.RequestException, ValueError):
+        except(httpx.RequestError, ValueError):
             print("Сетевая ошибка")
             return False
+
 
 def get_soup(html):
     soup = BeautifulSoup(html, 'html.parser')
     return soup
 
+
 def get_menu_name(html):
     name = get_soup(html).find('h1').text
     return name
+
 
 def get_menu(html):
     ingredients_li = get_soup(html).find('ul', class_="ingredients-lst").findAll('li')
@@ -34,6 +39,7 @@ def get_menu(html):
             'units': type
         })
     return all_ingredients
+
 
 if __name__ == "__main__":
     html = get_html('https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/')

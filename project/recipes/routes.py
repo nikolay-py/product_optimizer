@@ -29,10 +29,10 @@ def products():
             html = get_html(recipe_url)
             if 'gastronom' in recipe_url:
                 name = get_gast_name(html)
-                ingredients = get_recipe_gastr(html) # https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
+                ingredients = get_recipe_gastr(html)  # https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
             if 'menunedeli' in recipe_url:
                 name = get_menu_name(html)
-                ingredients = get_menu(html) # https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
+                ingredients = get_menu(html)  # https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
             create_recipe(db, name, recipe_url, ingredients)
             recipes = get_recipe(db, recipe_url)
 

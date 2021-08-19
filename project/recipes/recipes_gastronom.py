@@ -1,9 +1,12 @@
 import pprint
+
 from project.recipes.recipes_menunedeli import get_html, get_soup
+
 
 def get_gast_name(html):
     name = get_soup(html).find('h1').text
     return name
+
 
 def get_recipe_gastr(html):
     ingredients = get_soup(html).findAll('li', class_='recipe__ingredient')
@@ -11,7 +14,7 @@ def get_recipe_gastr(html):
     all_ingredients = []
     for item in ingredients:
         ingredient = item.text
-        ingredient = ingredient.split(" ", 1) #IMPORTANT: long '–', not short '-'
+        ingredient = ingredient.split(" ", 1)  # IMPORTANT: long '–', not short '-'
         qty_units = ingredient[1].lstrip()
         qty_units = qty_units.split(" ", 1)
 
@@ -21,17 +24,18 @@ def get_recipe_gastr(html):
             'units': qty_units[1]
         })
     return all_ingredients
-    
+
+
 if __name__ == "__main__":
     html = get_html('https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty')
     if html:
         ingredients = get_recipe_gastr(html)
         pprint.pprint(ingredients)
 
- # TO DO
- # CHECK if start with digit
- # split 5-6 to bigger number
- # change digit to INT     
+# TO DO
+# CHECK if start with digit
+# split 5-6 to bigger number
+# change digit to INT
 
 # URLs
 # 'https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty'

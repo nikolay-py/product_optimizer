@@ -1,6 +1,7 @@
 import sqlalchemy as sa
 from database import Base
 
+
 class Recipe(Base):
     __tablename__ = 'recipes'
     id = sa.Column(sa.Integer, primary_key=True)
@@ -10,6 +11,7 @@ class Recipe(Base):
 
     def __repr__(self):
         return '<Recipe {}>'.format(self.name)
+
 
 class Product(Base):
     __tablename__ = 'products'

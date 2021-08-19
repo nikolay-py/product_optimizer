@@ -1,6 +1,6 @@
-from sqlalchemy.orm.session import Session
-from .models import Recipe
 from sqlalchemy.orm import Session
+
+from .models import Recipe
 
 
 def create_recipe(db: Session, name, url, product_list):
@@ -14,8 +14,8 @@ def create_recipe(db: Session, name, url, product_list):
     db.refresh(new_recipe)
     return new_recipe
 
+
 def get_recipe(db: Session, url=None):
     if url:
         return db.query(Recipe).filter_by(url=url).all()
     return db.query(Recipe).all()
-
