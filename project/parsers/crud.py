@@ -1,3 +1,6 @@
+"""Working with the product database."""
+from typing import Dict, List, Union
+
 from sqlalchemy.exc import SQLAlchemyError
 
 from database import SessionLocal
@@ -6,7 +9,8 @@ from .models import Good
 from .search_goods import get_several_variants, limit_result
 
 
-def create_goods(items):
+def create_goods(items: Dict[str, Union[str, float]]) -> None:
+    """Save in database."""
     goods = Good(
         category=items['key'],
         name=items['name'],
@@ -26,8 +30,9 @@ def create_goods(items):
             raise
 
 
-def get_goods(recipe, length_list=10):
-    # На вход получаем запрос в види списка словарей,
+def get_goods(recipe: List[Dict[str, Union[str, float]]], length_list: int = 10) -> List[Dict[str, Union[str, float]]]:
+    """Enriching the dictionary goods."""
+    # На вход получаем запрос в виде списка словарей,
     # пройдемся по каждому из них
     for ingredient in recipe:
         # Получаем общий результат поиска по названию ингридиента

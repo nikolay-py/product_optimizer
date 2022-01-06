@@ -1,4 +1,6 @@
+"""Models Recipe and Product."""
 import sqlalchemy as sa
+
 from database import Base
 
 
@@ -9,7 +11,7 @@ class Recipe(Base):
     url = sa.Column(sa.String, nullable=False)
     product_list = sa.Column(sa.JSON, nullable=False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return '<Recipe {}>'.format(self.name)
 
 
@@ -20,5 +22,5 @@ class Product(Base):
     url = sa.Column(sa.String, nullable=False)
     product_list = sa.Column(sa.Text, nullable=False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<Item {self.name} {self.id}>'

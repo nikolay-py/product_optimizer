@@ -1,10 +1,13 @@
-import pprint
+"""Retrieving data for a recipe."""
+from typing import Dict, List, Union
 
+import bs4
 import httpx
 from bs4 import BeautifulSoup
 
 
-def get_html(url):
+def get_html(url: str) -> Union[str, bool]:
+    """We get raw materials for the soup."""
     with httpx.Client(timeout=10.0) as client:
         try:
             result = client.get(url)
@@ -15,17 +18,20 @@ def get_html(url):
             return False
 
 
-def get_soup(html):
+def get_soup(html: str) -> bs4:
+    """Get soup object."""
     soup = BeautifulSoup(html, 'html.parser')
     return soup
 
 
-def get_menu_name(html):
+def get_menu_name(html: str) -> str:
+    """Get menu name."""
     name = get_soup(html).find('h1').text
     return name
 
 
-def get_menu(html):
+def get_menu(html: str) -> List[Dict[str, float]]:
+    """Get list ingredients for recipe."""
     ingredients_li = get_soup(html).find('ul', class_="ingredients-lst").findAll('li')
     all_ingredients = []
     for li in ingredients_li:
@@ -39,12 +45,3 @@ def get_menu(html):
             'units': type
         })
     return all_ingredients
-
-
-if __name__ == "__main__":
-    html = get_html('https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/')
-    if html:
-        name = get_menu_name(html)
-        ingredients = get_menu(html)
-        print(name)
-        pprint.pprint(ingredients)

@@ -1,3 +1,4 @@
+"""Models Good."""
 from sqlalchemy import Column, Integer, String
 
 from database import Base
@@ -14,5 +15,5 @@ class Good(Base):
     units = Column(String(), nullable=False)
     price_per_kg = Column(Integer(), nullable=False)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'<Good {self.name} {self.category}>'

@@ -1,9 +1,14 @@
+"""Actions for Recipe model."""
+from typing import Dict, List, Union
+
 from sqlalchemy.orm import Session
 
 from .models import Recipe
 
 
-def create_recipe(db: Session, name, url, product_list):
+def create_recipe(db: Session, name: str, url: str,
+                  product_list: List[Dict[str, Union[str, float]]]) -> Recipe:
+    """Save model in db."""
     new_recipe = Recipe(
         name=name,
         url=url,
@@ -15,7 +20,8 @@ def create_recipe(db: Session, name, url, product_list):
     return new_recipe
 
 
-def get_recipe(db: Session, url=None):
+def get_recipe(db: Session, url: str = None) -> Recipe:
+    """Request to the base."""
     if url:
         return db.query(Recipe).filter_by(url=url).all()
     return db.query(Recipe).all()

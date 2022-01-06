@@ -15,6 +15,7 @@ python-dotenv = "*"
 flake8 = "*"
 pip = "*"
 isort = "*"
+mypy = "*"
 
 [requires]
 python_version = "3.8"

@@ -6,8 +6,8 @@ from project.parsers.link_list import get_links
 from project.parsers.price import get_price
 
 
-def run_parser():
-    """Entrypoint."""
+def run_parser() -> None:
+    """Runs parser."""
     logging.info('Start parser')
 
     link_list = get_links()
