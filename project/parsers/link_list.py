@@ -28,11 +28,12 @@ def get_links():
         for item in soup.find_all('ul', class_='categoryList'):
             for ref in item.find_all('a'):
                 # Получаем ссылку и убираем принадлежность к городу
-                link_category = ref['href'].replace('/spb', '')
-
+                link_category = ref['href']
+                index_category = link_category.find('/spb') + 4
+                clean_category = link_category[index_category:]
                 # Поверяем, что url каталога не в списке исключений
-                if link_category not in omit_list:
-                    full_url = get_full_url(link_category)
+                if clean_category not in omit_list:
+                    full_url = get_full_url(clean_category)
                     links_list.append(full_url)
 
         return links_list
@@ -44,5 +45,6 @@ def get_links():
 #  - дают возможность замены города
 # Москва ='msk', Питер ='spb'
 def get_full_url(link_category, city='msk'):
+    # full_url = f"https://www.okeydostavka.ru/{city}{link_category}"
     full_url = f"https://www.okeydostavka.ru/{city}{link_category}"
     return full_url

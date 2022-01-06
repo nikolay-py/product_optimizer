@@ -5,8 +5,12 @@ from .crud import create_goods
 def get_catalog_name(soup):
     link_page = soup.find(
         'li', class_='breadcrumb-page__item breadcrumb-page__current')
-    catalog_name = link_page.text.strip()
-    return catalog_name.lower()
+    try:
+        catalog_name = link_page.text.strip()
+        return catalog_name.lower()
+    except AttributeError:
+        print('Каталог без имени')
+        return False
 
 
 # Расчет цены за кг и проверка на пустые значения веса
@@ -58,7 +62,7 @@ def get_price(soup):
         # Цена за кг
         price_per_kg = get_price_per_kg(item_price, weight)
 
-        if price_per_kg is not False:
+        if price_per_kg is not False and catalog_name is not False:
             # Наполняем словарь
             items = {
                 'key': catalog_name,

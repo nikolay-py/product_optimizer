@@ -18,6 +18,7 @@ def run_parser():
                 res = client.get(url)
                 res.raise_for_status()
                 result = res.text
+                print(f'Счтиываю {url}')
             except(httpx.RequestError, ValueError) as e:
                 print(f"Сетевая ошибка: {e} url: {url}")
                 result = False
