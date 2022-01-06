@@ -1,8 +1,14 @@
+"""We fill the base with products."""
+from typing import Union
+
+import bs4
+
 from .crud import create_goods
 
 
-# Получаем имя каталога
-def get_catalog_name(soup):
+def get_catalog_name(soup: bs4) -> Union[str, bool]:
+    """Get catalog name."""
+    # Получаем имя каталога
     link_page = soup.find(
         'li', class_='breadcrumb-page__item breadcrumb-page__current')
     try:
@@ -13,8 +19,9 @@ def get_catalog_name(soup):
         return False
 
 
-# Расчет цены за кг и проверка на пустые значения веса
-def get_price_per_kg(price, weight):
+def get_price_per_kg(price: str, weight: str) -> Union[str, bool]:
+    """Price per kg."""
+    # Расчет цены за кг и проверка на пустые значения веса
     try:
         price_per_kg = float(price) / float(weight)
         return "{0:.2f}".format(price_per_kg)
@@ -24,16 +31,18 @@ def get_price_per_kg(price, weight):
         return False
 
 
-# Вытаскиваем из разрозненного текста цену
-def get_float_price(str_price):
+def get_float_price(str_price: str) -> str:
+    """Get float price."""
+    # Вытаскиваем из разрозненного текста цену
     item_price = ''.join([i for i in str_price if i.isnumeric()])
     price = float(item_price) / 100
     return "{0:.2f}".format(price)
 
 
-# Получаем основной словарь с ценой товаров
-def get_price(soup):
-    items = []
+def get_price(soup: bs4) -> None:
+    """We get the main dictionary with the price of goods."""
+    # Получаем основной словарь с ценой товаров
+    items = {}
     catalog_name = get_catalog_name(soup)
     # Находим все классы catalog-item, даже лишние, и перебираем их
     for item in soup.find_all('div', class_='product ok-theme'):
@@ -77,5 +86,3 @@ def get_price(soup):
         else:
             print(f"{catalog_name} - {item_title} не учтена")
             print('-------------------------------------------------------')
-
-    return items

@@ -1,8 +1,8 @@
+from typing import Optional
 from database import get_db
 from flask import Blueprint, render_template, request
 from project.parsers.crud import get_goods
 from project.recipes.crud import create_recipe, get_recipe
-from project.recipes.recipes_gastronom import get_gast_name, get_recipe_gastr
 from project.recipes.recipes_menunedeli import get_html, get_menu, get_menu_name
 
 from .models import Recipe
@@ -11,7 +11,7 @@ recipes_bp = Blueprint('products', __name__, template_folder='./templates')
 
 
 @recipes_bp.route('/', methods=['GET','POST'])
-def products():
+def products() -> Optional[str]:
     db = get_db()
     if request.method == 'GET':
         return render_template(
@@ -19,6 +19,7 @@ def products():
             title='My products'
         )
     if request.method == 'POST':
+        recipe_url: Optional[str]
         recipe_url = request.form.get('url')
         recipes = get_recipe(db, recipe_url)
         if len(recipes) == 1:
@@ -27,9 +28,6 @@ def products():
         else:
             print('Запущен парсер')
             html = get_html(recipe_url)
-            if 'gastronom' in recipe_url:
-                name = get_gast_name(html)
-                ingredients = get_recipe_gastr(html)  # https://www.gastronom.ru/recipe/26403/borsch-bez-kapusty
             if 'menunedeli' in recipe_url:
                 name = get_menu_name(html)
                 ingredients = get_menu(html)  # https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
@@ -54,7 +52,8 @@ def products():
 
 
 @recipes_bp.route('/<int:recipe_id>', methods=['GET'])
-def get_products_step(recipe_id):
+def get_products_step(recipe_id: int) -> str:
+    """Getting a recipe by ID from the database."""
     db = get_db()
     recipe = db.query(Recipe).filter(Recipe.id == recipe_id).first()
     ingredients = recipe.product_list

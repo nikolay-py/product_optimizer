@@ -1,3 +1,6 @@
+"""Search engine of ingredients in the database with goods."""
+from typing import Dict, List, Union
+
 from sqlalchemy.sql.expression import and_
 
 from database import get_db
@@ -6,8 +9,9 @@ from project.parsers.models import Good
 db = get_db()
 
 
-# Делим слово пополам для неточного поиска
-def division_word(words):
+def division_word(words: str) -> List[str]:
+    """Divide the word in half for inexact search."""
+    # Делим слово пополам для неточного поиска
     new_words = []
     for word in words:
         new_length = int(len(word) / 2)
@@ -16,9 +20,10 @@ def division_word(words):
     return new_words
 
 
-# Поддерживаем структуру поиска в 3 слова,
-# чтобы избежать ошибки выхода вне индекса
-def phrase_limit(phrase):
+def phrase_limit(phrase: str) -> List[str]:
+    """Increase the number of words in the expression. Maintaining a 3-word standard."""
+    # Поддерживаем структуру поиска в 3 слова,
+    # чтобы избежать ошибки выхода вне индекса
     phrase = phrase.lower().split()
     if len(phrase) > 2:
         return phrase
@@ -26,8 +31,9 @@ def phrase_limit(phrase):
         return phrase + ['', '', '']
 
 
-# Основной механизм поиска по базе
-def search_for_base(words, num_rows=3):
+def search_for_base(words: List[str], num_rows: int = 3) -> List[Dict[str, Union[str, float]]]:
+    """Search words in base."""
+    # Основной механизм поиска по базе
     result_search = []
     top_good = db.query(Good).filter(
         and_(
@@ -45,7 +51,8 @@ def search_for_base(words, num_rows=3):
     return result_search
 
 
-def save_as_dict(base_object):
+def save_as_dict(base_object: Good) -> Dict[str, Union[str, float]]:
+    """Save as dict."""
     base_object = {
         'id': base_object.id,
         'key': base_object.category,
@@ -58,8 +65,9 @@ def save_as_dict(base_object):
     return base_object
 
 
-# Сокращаем список результатов поиска
-def limit_result(result_list, length_list):
+def limit_result(result_list: List[str], length_list: int) -> List[str]:
+    """Limiting the number of results."""
+    # Сокращаем список результатов поиска
     new_result = []
 
     if length_list < len(result_list):
@@ -70,8 +78,9 @@ def limit_result(result_list, length_list):
     return result_list
 
 
-# Несколько варинатнтов поиска в одной функции
-def get_several_variants(phrase):
+def get_several_variants(phrase: str) -> List[Dict[str, Union[str, float]]]:
+    """The function combines several search engines."""
+    # Несколько варинатнтов поиска в одной функции
     goods_list = []
     unique_list = []
     words = phrase_limit(phrase)
@@ -93,7 +102,3 @@ def get_several_variants(phrase):
             unique_list.append(good)
 
     return unique_list
-
-
-# if __name__ == '__main__':
-#     get_product('Филе бедра индейки охлажденное ТЧН (ОКЕЙ DAILY), кг')

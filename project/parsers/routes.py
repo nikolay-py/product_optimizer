@@ -1,3 +1,4 @@
+"""Routs for work with db Goods."""
 from flask import Blueprint
 
 # Чтобы создались колонки модели Good при создании общей базы,
@@ -9,7 +10,8 @@ goods_bp = Blueprint('goods_bp', __name__, url_prefix='/goods')
 
 
 @goods_bp.route('/base', methods=['GET'])
-def goods():
-    print('====================================================')
+def goods() -> str:
+    """Runs parser."""
     run_parser()
-    return 'Пасрер запущен, можете перейти на другую страницу'
+    return 'Наполнение базы продуктов окончен, можете \
+        вернуться на страртовую страницу и загурзить рецепт'
