@@ -1,12 +1,13 @@
 """Working with the product database."""
 from typing import Dict, List, Union
 
-from sqlalchemy.exc import SQLAlchemyError
+# from sqlalchemy.exc import SQLAlchemyError
 
-from database import SessionLocal
+# from database import SessionLocal
 
 from .models import Good
 from .search_goods import get_several_variants, limit_result
+from utils import save_data
 
 
 def create_goods(items: Dict[str, Union[str, float]]) -> None:
@@ -19,15 +20,7 @@ def create_goods(items: Dict[str, Union[str, float]]) -> None:
         units=items['units'],
         price_per_kg=items['price_per_kg']
     )
-    with SessionLocal() as session:
-        session.add(goods)
-        try:
-            session.commit()
-            session.refresh(goods)
-        except SQLAlchemyError as e:
-            print(f"Ошибка {e} при венсении в базу данных {goods}")
-            session.rollback()
-            raise
+    save_data(goods)
 
 
 def get_goods(recipe: List[Dict[str, Union[str, float]]], length_list: int = 10) -> List[Dict[str, Union[str, float]]]:

@@ -3,10 +3,8 @@ from typing import Dict, List, Union
 
 from sqlalchemy.sql.expression import and_
 
-from database import get_db
+from extensions import db
 from project.parsers.models import Good
-
-db = get_db()
 
 
 def division_word(words: str) -> List[str]:
@@ -35,7 +33,7 @@ def search_for_base(words: List[str], num_rows: int = 3) -> List[Dict[str, Union
     """Search words in base."""
     # Основной механизм поиска по базе
     result_search = []
-    top_good = db.query(Good).filter(
+    top_good = db.session.query(Good).filter(
         and_(
             Good.name.ilike(f'%{words[0]}%'),
             Good.name.ilike(f'%{words[1]}%'),

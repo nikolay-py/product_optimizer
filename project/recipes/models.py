@@ -1,10 +1,10 @@
 """Models Recipe and Product."""
 import sqlalchemy as sa
 
-from database import Base
+from extensions import db
 
 
-class Recipe(Base):
+class Recipe(db.Model):
     __tablename__ = 'recipes'
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String, nullable=False)
@@ -15,7 +15,7 @@ class Recipe(Base):
         return '<Recipe {}>'.format(self.name)
 
 
-class Product(Base):
+class Product(db.Model):
     __tablename__ = 'products'
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String, nullable=False)

@@ -3,9 +3,10 @@ from app import create_app
 from database import migrate, drop
 from sqlalchemy_utils import create_database, database_exists, drop_database
 from database import get_db
-
+import tempfile
 import os
 import time
+from config import TestConfig
 
 @pytest.fixture(scope='function')
 def db():
@@ -33,3 +34,18 @@ def client(db):
     with app.test_client() as client:
         client.db = db
         yield client
+
+
+@pytest.fixture(scope='module')
+def test_client():
+    app = create_app(create_db=False)
+    app.config.from_object(TestConfig)
+
+    db_fd, app.config['DATABASE'] = tempfile.mkstemp()
+
+    with app.test_client() as testing_client:
+        with app.app_context():
+            yield testing_client
+
+    os.close(db_fd)
+    os.unlink(app.config['DATABASE'])
