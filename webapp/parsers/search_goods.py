@@ -3,8 +3,8 @@ from typing import Dict, List, Union
 
 from sqlalchemy.sql.expression import and_
 
-from extensions import db
-from project.parsers.models import Good
+from webapp.extensions import db
+from webapp.parsers.models import Good
 
 
 def division_word(words: str) -> List[str]:

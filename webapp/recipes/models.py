@@ -1,7 +1,7 @@
 """Models Recipe and Product."""
 import sqlalchemy as sa
 
-from extensions import db
+from webapp.extensions import db
 
 
 class Recipe(db.Model):

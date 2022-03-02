@@ -5,10 +5,21 @@ import bs4
 import httpx
 from bs4 import BeautifulSoup
 
+agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36'
+# agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36'
+prox = '176.101.89.226'
+# prox = '109.195.23.223'
+# prox = '81.24.95.176'
+timeout = httpx.Timeout(30.0, connect=10.0)
+
 
 def get_html(url: str) -> Union[str, bool]:
     """We get raw materials for the soup."""
-    with httpx.Client(timeout=10.0) as client:
+    with httpx.Client(
+            timeout=timeout,
+            proxies={'http://': 'http://' + prox},
+            headers={'User-Agent': agent}
+    ) as client:
         try:
             result = client.get(url)
             result.raise_for_status()

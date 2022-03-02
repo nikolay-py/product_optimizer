@@ -1,13 +1,8 @@
 """Working with the product database."""
 from typing import Dict, List, Union
-
-# from sqlalchemy.exc import SQLAlchemyError
-
-# from database import SessionLocal
-
-from .models import Good
-from .search_goods import get_several_variants, limit_result
-from utils import save_data
+from webapp.parsers.models import Good
+from webapp.parsers.search_goods import get_several_variants, limit_result
+from webapp.utils import save_data
 
 
 def create_goods(items: Dict[str, Union[str, float]]) -> None:

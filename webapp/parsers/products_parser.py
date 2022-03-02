@@ -2,8 +2,8 @@ import logging
 
 import httpx
 from bs4 import BeautifulSoup
-from project.parsers.link_list import get_links
-from project.parsers.price import get_price
+from webapp.parsers.link_list import get_links
+from webapp.parsers.price import get_price
 
 
 def run_parser() -> None:

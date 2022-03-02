@@ -1,11 +1,11 @@
 from typing import Optional
-from extensions import db
+from webapp.extensions import db
 from flask import Blueprint, render_template, request
-from project.parsers.crud import get_goods
-from project.recipes.crud import create_recipe, get_recipe
-from project.recipes.recipes_menunedeli import get_html, get_menu, get_menu_name
+from webapp.parsers.crud import get_goods
+from webapp.recipes.crud import create_recipe, get_recipe
+from webapp.recipes.recipes_menunedeli import get_html, get_menu, get_menu_name
 
-from .models import Recipe
+from webapp.recipes.models import Recipe
 
 recipes_bp = Blueprint('products', __name__, template_folder='./templates')
 
@@ -32,14 +32,15 @@ def products() -> Optional[str]:
                 ingredients = get_menu(html)  # https://menunedeli.ru/recipe/vengerskij-sup-gulyash-s-kartofelem/
             create_recipe(db.session, name, recipe_url, ingredients)
             recipes = get_recipe(db.session, recipe_url)
+            print(f'\n\n\n', recipes, '\n\n\n')
 
         recipe_id = recipes[0].id
         name = recipes[0].name
         ingredients = recipes[0].product_list
-        for items in ingredients:
-            print(items.get('item'))
-            print(items.get('qty'))
-            print(items.get('units'))
+        # for items in ingredients:
+        #     print(items.get('item'))
+        #     print(items.get('qty'))
+        #     print(items.get('units'))
 
         return render_template(
             'Recipe_Form.html',

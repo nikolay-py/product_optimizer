@@ -3,7 +3,7 @@ from typing import Union
 
 import bs4
 
-from .crud import create_goods
+from webapp.parsers.crud import create_goods
 
 
 def get_catalog_name(soup: bs4) -> Union[str, bool]:

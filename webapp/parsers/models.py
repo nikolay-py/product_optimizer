@@ -1,5 +1,5 @@
 """Models Good."""
-from extensions import db
+from webapp.extensions import db
 
 
 class Good(db.Model):

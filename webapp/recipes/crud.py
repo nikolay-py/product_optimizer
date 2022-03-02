@@ -3,7 +3,7 @@ from typing import Dict, List, Union
 
 from sqlalchemy.orm import Session
 
-from .models import Recipe
+from webapp.recipes.models import Recipe
 
 
 def create_recipe(db: Session, name: str, url: str,

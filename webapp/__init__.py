@@ -1,10 +1,9 @@
 """Create Flask-app."""
 import os
-# from database import migrate
 from flask import Flask
-from project.root_routes import root
+from webapp.root_routes import root
 from config import Config
-from extensions import db
+from webapp.extensions import db
 
 
 def create_app(create_db: bool = True) -> Flask:
@@ -17,9 +16,5 @@ def create_app(create_db: bool = True) -> Flask:
     #     migrate()
     return app
 
-db.create_all(app=create_app())
 
-# razdel = print('==============================================================================')
-    # for key, value in app.config.items():
-    #     print(key, value)
-    # razdel
+db.create_all(app=create_app())

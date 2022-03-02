@@ -1,9 +1,9 @@
-from extensions import db
+from webapp.extensions import db
 from sqlalchemy.exc import SQLAlchemyError
+from webapp.parsers.models import Good
 
 
-
-def save_data(goods) -> None:
+def save_data(goods:Good) -> None:
     """Image data save model."""
     try:
         db.session.add(goods)

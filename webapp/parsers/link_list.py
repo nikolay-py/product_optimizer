@@ -4,7 +4,7 @@ from typing import List, Optional, Union
 import httpx
 from bs4 import BeautifulSoup
 
-from .omit_list import omit_list
+from webapp.parsers.omit_list import omit_list
 
 start_url = "https://www.okeydostavka.ru/spb/catalog"
 

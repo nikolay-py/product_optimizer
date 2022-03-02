@@ -1,6 +1,6 @@
 from flask import Blueprint
-from project.parsers.routes import goods_bp  # goods_bp
-from project.recipes.routes import recipes_bp  # products_bp #TODO Проверить recipes_bp или API
+from webapp.parsers.routes import goods_bp  # goods_bp
+from webapp.recipes.routes import recipes_bp  # products_bp #TODO Проверить recipes_bp или API
 
 root = Blueprint('root', __name__,)
 root.register_blueprint(recipes_bp)
